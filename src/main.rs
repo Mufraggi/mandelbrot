@@ -3,9 +3,27 @@ mod create_img;
 
 extern crate num;
 use num::Complex;
+use std::io::Write;
+use crate::create_img::{render, write_img};
+use crate::params_cmd::{check_pair, check_complex};
 
 fn main() {
-    println!("Hello, world!");
+    let args: Vec<String> = std::env::args().collect();
+    if args.len() != 5 {
+        writeln!(std::io::stderr(),
+                 "Usage: mandelbrot FILENAME PIXELS SUPGA INFDR")
+            .unwrap();
+        writeln!(std::io::stderr(),
+                 "Exemple {} mandel.png 1000*750 -1.20,0.35 -1,0.20", args[0])
+            .unwrap();
+        std::process::exit(1);
+    }
+    let bords = check_pair(&args[2], '*').expect("Error Size image");
+    let super_ga = check_complex(&args[3]).expect("Error check point left");
+    let infer_dr = check_complex(&args[4]).expect("Error check point right");
+    let mut pixels = vec![0; bords.0 * bords.1];
+    render(&mut pixels, bords, super_ga, infer_dr);
+    write_img(&args[1], &pixels, bords).expect("Error write PNG")
 }
 
 /*#[allow(dead_code)]

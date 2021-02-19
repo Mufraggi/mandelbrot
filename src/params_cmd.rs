@@ -5,7 +5,7 @@ use num::Complex;
 /// You need to respect this format <left><sep><right> exemple:
 ///"400*600" '*'
 ///
-fn check_pair<T:FromStr>(s: &str, seperator: char) -> Option<(T,T)> {
+pub(crate) fn check_pair<T:FromStr>(s: &str, seperator: char) -> Option<(T, T)> {
     match s.find(seperator) {
         None => None,
         Some(index) => {
@@ -18,7 +18,7 @@ fn check_pair<T:FromStr>(s: &str, seperator: char) -> Option<(T,T)> {
 }
 
 /// Analyse 1 paire off to float séparate by a ,
-fn check_complex(s: &str) -> Option<Complex<f64>> {
+pub(crate) fn check_complex(s: &str) -> Option<Complex<f64>> {
     match check_pair(s, ',') {
         Some((re, im)) => Some(Complex { re, im }),
         None => None
