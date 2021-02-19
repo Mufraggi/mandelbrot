@@ -9,7 +9,7 @@ use image::png::PNGEncoder;
 
 /// function to convert a comlex to pixel
 /// 'bords' is one paire of the size off the image height and width
-fn pixel_to_point(bords:(usize, usize),
+pub(crate) fn pixel_to_point(bords:(usize, usize),
                   pixel:(usize, usize),
                   super_ga: Complex<f64>,
                   infer_dr:Complex<f64>) -> Complex<f64> {
